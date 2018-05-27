@@ -57,7 +57,7 @@ int main()
     //test1
     printf("\nTest 1 ---> Check if player draws three cards and it's from their own deck\n\n");
    	printf("Checking handCount...\n");
-	assertTrue(S_Original.handCount[0]+3, S.handCount[0]);
+	assertTrue(S_Original.handCount[0]+2, S.handCount[0]);
 	printf("\n");
 	printf("Checking deckCount...\n");
 	assertTrue(S_Original.deckCount[0]-3, S.deckCount[0]);

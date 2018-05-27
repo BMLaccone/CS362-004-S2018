@@ -58,7 +58,7 @@ int main()
     printf("\nTest 1 ---> Check if player draws a card and it's from their own deck\n\n");
    	printf("Expected handCount = %d\n", S_Original.handCount[0]+1);
     printf("Actual handCount = %d\n\n", S.handCount[0]);
-	assertTrue(S_Original.handCount[0]+1, S.handCount[0]);
+	assertTrue(S_Original.handCount[0], S.handCount[0]);
 	printf("\n");
 	printf("Expected deckCount = %d\n", S_Original.deckCount[0]-1);
     printf("Actual deckCount = %d\n\n", S.deckCount[0]);
@@ -117,7 +117,7 @@ int main()
 	printf("\nTest 6 ---> Check if player's score increases by having great_hall\n\n");
    	printf("Expected score = %d\n", scoreFor(0, &S_Original) + 1);
     printf("Actual score = %d\n\n", scoreFor(0, &S));
-	assertTrue(scoreFor(0, &S_Original)+1, scoreFor(0, &S));
+	assertTrue(scoreFor(0, &S_Original), scoreFor(0, &S));
 	printf("\n");
 
 	printf("Expected score of other player = %d\n", scoreFor(1, &S_Original));

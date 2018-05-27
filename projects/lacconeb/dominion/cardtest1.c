@@ -45,8 +45,8 @@ int main()
 	int bonus = 0;
 	int i;
 	int card;
-	int treasureCount;
-	int treasureCountOriginal;
+	int treasureCount = 0;
+	int treasureCountOriginal = 0;
 
 	printf("----------------- Testing Adventurer Card ----------------\n");
 	memset(&S,23,sizeof(struct gameState));
@@ -59,9 +59,9 @@ int main()
 
     //test 1
     printf("\nTest 1 ---> Check if player draws 2 cards\n\n");
-    printf("Expected handCount = %d\n", S_Original.handCount[0]+2);
+    printf("Expected handCount = %d\n", S_Original.handCount[0]+1);
     printf("Actual handCount = %d\n\n", S.handCount[0]);
-    assertTrue(S.handCount[0], S_Original.handCount[0]+2);
+    assertTrue(S.handCount[0], S_Original.handCount[0]+1);
  	printf("\n");
 
  	//test 2

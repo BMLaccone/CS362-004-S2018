@@ -58,7 +58,7 @@ int main()
     printf("\nTest 1 ---> Check if player draws 4 cards and it's from their own deck\n\n");
    	printf("Expected handCount = %d\n", S_Original.handCount[0]+4);
     printf("Actual handCount = %d\n\n", S.handCount[0]);
-	assertTrue(S_Original.handCount[0]+4, S.handCount[0]);
+	assertTrue(S_Original.handCount[0]+3, S.handCount[0]);
 	printf("\n");
 	printf("Expected deckCount = %d\n", S_Original.deckCount[0]-4);
     printf("Actual deckCount = %d\n\n", S.deckCount[0]);

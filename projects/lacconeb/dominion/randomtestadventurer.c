@@ -109,7 +109,7 @@ int main()
 			totalCardsFailCount++;
 
 		//fails 2
-		if (OriginalS.handCount[player] + 2 != S.handCount[player])
+		if (OriginalS.handCount[player] + 1 != S.handCount[player])
 			handFailCount++;
 
 		//fails 3
