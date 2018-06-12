@@ -278,11 +278,284 @@ public class UrlValidatorTest extends TestCase {
 
    }
    
-   public void testIsValid()
+    // Total 21600
+   public void testIsValidAllSchemes()
    {
-	   //You can use this function for programming based testing
+	   System.out.println("Starting testIsValidAllSchemes...");
+	   String testURL;	//Used to hold the permutated URL
+	   int numValid = 0, numInvalid = 0;
+	   int NUM_SCHEMES = 5;
+	   int NUM_AUTHS = 10;
+	   int NUM_PORTS = 6;
+	   int NUM_PATHS = 12;
+	   int NUM_QUERIES = 6;
+	   
+	   String schemes[] = new String [NUM_SCHEMES];
+	   schemes[0] = "http://";		// Valid
+	   schemes[1] = "ftp://";		// Valid
+	   schemes[2] = "http:/";		// Invalid
+	   schemes[3] = "localhost:";	// Invalid
+	   schemes[4] = "fsociety";		// Invalid
+	   
+	   String authority[] = new String [NUM_AUTHS];
+	   authority[0] = "www.amazon.com";	// Valid
+	   authority[1] = "amazon.com";		// Valid
+	   authority[2] = "255.255.255.255";// Valid
+	   authority[3] = "abcdef";			// Invalid
+	   authority[4] = "12345";			// Invalid
+	   authority[5] = "abc.d1f";		// Invalid
+	   authority[6] = ".abc";			// Invalid
+	   authority[7] = "123.";			// Invalid
+	   authority[8] = "abc.d1f";		// Invalid
+	   authority[9] = "";				// Invalid
+	   
+	   String port[] = new String [NUM_PORTS];
+	   port[0] = ":0";		// Valid
+	   port[1] = ":8080";	// Valid
+	   port[2] = "";		// Valid
+	   port[3] = "port";	// Invalid
+	   port[4] = "#";		// Invalid
+	   port[5] = ":-8080";	// Invalid
+	   
+	   String path[] = new String [NUM_PATHS];
+	   path[0] = "/taco";			// Valid
+	   path[1] = "";				// Valid
+	   path[2] = "plus+path";		// Valid
+	   path[3] = "underscore_path";	// Valid
+	   path[4] = "at@path";			// Valid
+	   path[5] = "dot.path";		// Valid
+	   path[6] = "percent%path";	// Valid	
+	   path[7] = "forslash/path";	// Invalid
+	   path[8] = "tilda~path";		// Invalid
+	   path[9] = "colon:path";		// Invalid	
+	   path[10] = "//";				// Invalid
+	   path[11] = "/double//path";	// Invalid
+	   
+	   String query[] = new String [NUM_QUERIES];
+	   query[0] = "";							// Valid
+	   query[1] = "?phrasing=Lana";				// Valid
+	   query[2] = "?12345";						// Valid
+	   query[3] = "?rick=sanchez&morty=gazorp"; // Valid
+	   query[4] = "/";							// Invalid
+	   query[5] = "phrasing";					// Invalid
+	   
+	   UrlValidator urlVal = new UrlValidator(schemes, null, UrlValidator.ALLOW_ALL_SCHEMES);
 
-   }
+	   System.out.println("GOOGLE CHECK " + urlVal.isValid("http://www.google.com"));
+	   
+	   for(int a = 0; a < NUM_SCHEMES; a++) {
+		   for(int b = 0; b < NUM_AUTHS; b++) {
+			   for(int c = 0; c < NUM_PORTS; c++) {
+				   for(int d = 0; d < NUM_PATHS; d++) {
+					   for(int e = 0; e < NUM_QUERIES; e++) {
+						   testURL = schemes[a] + authority[b] + port[c] + path[d] + query[e];
+						   if(urlVal.isValid(testURL)){
+						   System.out.println(testURL + " is valid!");
+							   numValid++;
+						   } else {
+						   System.out.println(testURL + " is NOT valid!");
+							   numInvalid++;
+						   }
+					   }
+				   }
+			   }
+		   }
+	   } // for
+	   System.out.println("Total VALID: " + numValid);
+	   System.out.println("Total NOT VALID: " + numInvalid);
+   } // testIsValidAllSchemes()
+   
+   // Total 51840 tests
+   public void testIsValid2Slashes()
+   {
+	   System.out.println("Starting testIsValid2Slashes...");
+	   String testURL;	//Used to hold the permutated URL
+	   int numValid = 0, numInvalid = 0;
+	   int NUM_SCHEMES = 12;
+	   int NUM_AUTHS = 10;
+	   int NUM_PORTS = 6;
+	   int NUM_PATHS = 12;
+	   int NUM_QUERIES = 6;
+	   
+	   String schemes[] = new String [NUM_SCHEMES];
+	   schemes[0] = "http://";		// Valid
+	   schemes[1] = "ftp://";		// Valid
+	   schemes[2] = "https://";		// Valid
+	   schemes[3] = "file://";		// Valid
+	   schemes[4] = "fsociety";		// Invalid
+	   schemes[5] = "http:/";		// Invalid
+	   
+	   /*Added these cases since EVERY Test was failing*/
+	   schemes[6] = "";				// Invalid
+	   schemes[7] = "123";			// Invalid
+	   schemes[8] = "C://";			// Invalid
+	   schemes[9] = "file:/";		// Invalid
+	   schemes[10] = "FILE://";		// Invalid
+	   schemes[11] = "HTTP://";		// Invalid
+	   
+	   String authority[] = new String [NUM_AUTHS];
+	   authority[0] = "www.google.com";	// Valid
+	   authority[1] = "google.com";		// Valid
+	   authority[2] = "255.255.255.255";// Valid
+	   authority[3] = "abcdef";			// Invalid
+	   authority[4] = "12345";			// Invalid
+	   authority[5] = "abc.d1f";		// Invalid
+	   authority[6] = ".abc";			// Invalid
+	   authority[7] = "123.";			// Invalid
+	   authority[8] = "abc.d1f";		// Invalid
+	   authority[9] = "";				// Invalid
+	   
+	   String port[] = new String [NUM_PORTS];
+	   port[0] = "";		// Valid
+	   port[1] = ":8080";	// Valid
+	   port[2] = ":0";		// Valid
+	   port[3] = "port";	// Invalid
+	   port[4] = "#";		// Invalid
+	   port[5] = ":-8080";	// Invalid
+	   
+	   String path[] = new String [NUM_PATHS];
+	   path[0] = "";				// Valid
+	   path[1] = "/taco";			// Valid
+	   path[2] = "plus+path";		// Valid
+	   path[3] = "underscore_path";	// Valid
+	   path[4] = "at@path";			// Valid
+	   path[5] = "dot.path";		// Valid
+	   path[6] = "percent%path";	// Valid
+	   path[7] = "/double//path";	// Valid <-- Should be allowed in ALLOW_2_SLASHES
+	   path[8] = "tilda~path";		// Invalid
+	   path[9] = "colon:path";		// Invalid	
+	   path[10] = "//";				// Invalid
+	   path[11] = "forslash/path";	// Invalid 
+	   
+	   String query[] = new String [NUM_QUERIES];
+	   query[0] = "";							// Valid
+	   query[1] = "?action=bronson";			// Valid
+	   query[2] = "?12345";						// Valid
+	   query[3] = "?rick=sanchez&morty=gazorp"; // Valid
+	   query[4] = "/";							// Invalid
+	   query[5] = "phrasing";					// Invalid
+	   
+	   UrlValidator urlVal = new UrlValidator(schemes, null, UrlValidator.ALLOW_2_SLASHES);
+	   
+	   System.out.println("GOOGLE CHECK " + urlVal.isValid("http://www.google.com"));
+	   
+	   for(int a = 0; a < NUM_SCHEMES; a++) {
+		   for(int b = 0; b < NUM_AUTHS; b++) {
+			   for(int c = 0; c < NUM_PORTS; c++) {
+				   for(int d = 0; d < NUM_PATHS; d++) {
+					   for(int e = 0; e < NUM_QUERIES; e++) {
+						   testURL = schemes[a] + authority[b] + port[c] + path[d] + query[e];
+						   if(urlVal.isValid(testURL)){
+							   System.out.println(testURL + " is valid!");
+							   numValid++;
+						   } else {
+							   System.out.println(testURL + " is NOT valid!");
+							   numInvalid++;
+						   }
+					   }
+				   }
+			   }
+		   }
+	   } // for
+	   System.out.println("Total VALID: " + numValid);
+	   System.out.println("Total NOT VALID: " + numInvalid);
+   } // testIsValid2Slashes()
+   
+   // Total 51840 tests
+   public void testIsValidNoFrag()
+   {
+	   System.out.println("Starting testIsValidNoFrag...");
+	   String testURL;	//Used to hold the permutated URL
+	   int numValid = 0, numInvalid = 0;
+	   int NUM_SCHEMES = 12;
+	   int NUM_AUTHS = 10;
+	   int NUM_PORTS = 6;
+	   int NUM_PATHS = 12;
+	   int NUM_QUERIES = 6;
+	   
+	   String schemes[] = new String [NUM_SCHEMES];
+	   schemes[0] = "http://";		// Valid
+	   schemes[1] = "ftp://";		// Valid
+	   schemes[2] = "https://";		// Valid
+	   schemes[3] = "file://";		// Valid
+	   schemes[4] = "fsociety";		// Invalid
+	   schemes[5] = "http:/";		// Invalid
+	   
+	   /*Added these cases since EVERY Test was failing*/
+	   schemes[6] = "";				// Invalid
+	   schemes[7] = "123";			// Invalid
+	   schemes[8] = "C://";			// Invalid
+	   schemes[9] = "file:/";		// Invalid
+	   schemes[10] = "FILE://";		// Invalid
+	   schemes[11] = "HTTP://";		// Invalid
+	   
+	   String authority[] = new String [NUM_AUTHS];
+	   authority[0] = "www.google.com";	// Valid
+	   authority[1] = "google.com";		// Valid
+	   authority[2] = "255.255.255.255";// Valid
+	   authority[3] = "abcdef";			// Invalid
+	   authority[4] = "12345";			// Invalid
+	   authority[5] = "abc.d1f";		// Invalid
+	   authority[6] = ".abc";			// Invalid
+	   authority[7] = "123.";			// Invalid
+	   authority[8] = "abc.d1f";		// Invalid
+	   authority[9] = "";				// Invalid
+	   
+	   String port[] = new String [NUM_PORTS];
+	   port[0] = "";		// Valid
+	   port[1] = ":8080";	// Valid
+	   port[2] = ":0";		// Valid
+	   port[3] = "port";	// Invalid
+	   port[4] = "#";		// Invalid
+	   port[5] = ":-8080";	// Invalid
+	   
+	   String path[] = new String [NUM_PATHS];
+	   path[0] = "";				// Valid
+	   path[1] = "/taco";			// Valid
+	   path[2] = "plus+path";		// Valid
+	   path[3] = "underscore_path";	// Valid
+	   path[4] = "at@path";			// Valid
+	   path[5] = "dot.path";		// Valid
+	   path[6] = "percent%path";	// Valid
+	   path[7] = "/double//path";	// Valid <-- Should be allowed in ALLOW_2_SLASHES
+	   path[8] = "tilda~path";		// Invalid
+	   path[9] = "colon:path";		// Invalid	
+	   path[10] = "//";				// Invalid
+	   path[11] = "forslash/path";	// Invalid 
+	   
+	   String query[] = new String [NUM_QUERIES];
+	   query[0] = "";							// Valid
+	   query[1] = "?action=bronson";			// Valid
+	   query[2] = "?12345";						// Valid
+	   query[3] = "?rick=sanchez&morty=gazorp"; // Valid
+	   query[4] = "/";							// Invalid
+	   query[5] = "phrasing";					// Invalid
+	   
+	   UrlValidator urlVal = new UrlValidator(schemes, null, UrlValidator.NO_FRAGMENTS);
+	   
+	   System.out.println("GOOGLE CHECK " + urlVal.isValid("http://www.google.com"));
+	   
+	   for(int a = 0; a < NUM_SCHEMES; a++) {
+		   for(int b = 0; b < NUM_AUTHS; b++) {
+			   for(int c = 0; c < NUM_PORTS; c++) {
+				   for(int d = 0; d < NUM_PATHS; d++) {
+					   for(int e = 0; e < NUM_QUERIES; e++) {
+						   testURL = schemes[a] + authority[b] + port[c] + path[d] + query[e];
+						   if(urlVal.isValid(testURL)){
+							   System.out.println(testURL + " is valid!");
+							   numValid++;
+						   } else {
+							   System.out.println(testURL + " is NOT valid!");
+							   numInvalid++;
+						   }
+					   }
+				   }
+			   }
+		   }
+	   } // for
+	   System.out.println("Total VALID: " + numValid);
+	   System.out.println("Total NOT VALID: " + numInvalid);
+   } // testIsValidNoFrag()
    
 
 
