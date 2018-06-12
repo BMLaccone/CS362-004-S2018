@@ -17,7 +17,48 @@ public class UrlValidatorTest extends TestCase {
       super(testName);
    }
 
-   
+   public void testManualTest()
+   {
+        UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+
+        System.out.println("***** Manual Testing *****");
+            
+        System.out.println("***** PART 1 ******");
+
+        System.out.println(urlVal.isValid("http://www.amazon.com"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:10000"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:20000"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:30000"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:40000"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:50000"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:60000"));
+            
+        System.out.println("***** PART 2 ******");
+
+        System.out.println(urlVal.isValid("http://www.amazon.com:0"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:10"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:200"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:3000"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:65535"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:65536"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:70000"));
+            
+        System.out.println("***** PART 3 ******");
+
+        System.out.println(urlVal.isValid("http://www.amazon.com:0"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:52"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:99"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:100"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:999"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:555"));
+        System.out.println(urlVal.isValid("http://www.amazon.com:723"));
+
+        System.out.println("***** PART 4 *****");
+            
+        System.out.println(urlVal.isValid("http://www.yahoo.com"));
+        System.out.println(urlVal.isValid("http://www.yahoo.com/test1"));
+  
+   }
    
    public void testYourFirstPartition()
    { 
